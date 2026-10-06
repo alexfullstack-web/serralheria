@@ -1,0 +1,408 @@
+/* =========================================================
+   SERRALHERIA — base, tokens e utilitários
+   ========================================================= */
+:root {
+  /* fundo */
+  --bg-0: #04070c;
+  --bg-1: #070b13;
+  --bg-2: #0b111c;
+  --bg-3: #111a28;
+  --line: rgba(150, 175, 210, 0.12);
+  --line-2: rgba(150, 175, 210, 0.22);
+
+  /* metal */
+  --steel-100: #eef2f7;
+  --steel-200: #cfd6e0;
+  --steel-300: #a9b3c1;
+  --steel-400: #7d8898;
+  --steel-500: #586272;
+
+  /* fogo */
+  --fire: #ff7a12;
+  --fire-2: #ff9a2e;
+  --fire-3: #ffc163;
+  --fire-deep: #e24e00;
+  --fire-glow: rgba(255, 122, 18, 0.45);
+
+  /* azul elétrico */
+  --volt: #3aa0ff;
+  --volt-2: #7cc4ff;
+  --volt-glow: rgba(58, 160, 255, 0.4);
+
+  --ok: #33d17a;
+  --err: #ff5a5f;
+
+  --text: #e6ebf2;
+  --text-2: #a7b1c0;
+  --text-3: #76808f;
+
+  --font-display: 'Saira', 'Arial Narrow', system-ui, sans-serif;
+  --font-body: 'Barlow', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-script: 'Kaushan Script', cursive;
+
+  --radius: 14px;
+  --radius-sm: 9px;
+  --header-h: 84px;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --shadow-deep: 0 30px 60px -20px rgba(0, 0, 0, 0.75), 0 12px 24px -12px rgba(0, 0, 0, 0.6);
+  --container: 1240px;
+  --gutter: clamp(16px, 4vw, 32px);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-h) - 8px);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg-1);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+body.no-scroll {
+  overflow: hidden;
+}
+
+img,
+svg,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
+img {
+  height: auto;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  background: none;
+  border: 0;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  line-height: 1.05;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+p {
+  margin: 0 0 1em;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+::selection {
+  background: var(--fire);
+  color: #111;
+}
+
+:focus-visible {
+  outline: 2px solid var(--fire-2);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-0);
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--steel-500), #2c3440);
+  border-radius: 10px;
+  border: 2px solid var(--bg-0);
+}
+
+.skip-link {
+  position: fixed;
+  left: 16px;
+  top: -60px;
+  z-index: 200;
+  background: var(--fire);
+  color: #111;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 700;
+  transition: top 0.2s;
+}
+.skip-link:focus {
+  top: 12px;
+}
+
+/* ---------- layout ---------- */
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  position: relative;
+  padding-block: clamp(72px, 10vw, 128px);
+}
+
+/* ---------- textos de identidade ---------- */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 800;
+  font-size: 0.82rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--fire);
+  margin-bottom: 14px;
+}
+.eyebrow::before {
+  content: '';
+  width: 28px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--fire));
+  box-shadow: 0 0 10px var(--fire-glow);
+}
+
+.text-fire {
+  background: linear-gradient(180deg, #ffd08a 0%, var(--fire-2) 35%, var(--fire) 60%, var(--fire-deep) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 18px rgba(255, 110, 10, 0.28));
+}
+
+.text-steel {
+  background: linear-gradient(180deg, #ffffff 0%, #dfe5ee 38%, #8c97a7 52%, #e9eef5 70%, #a2acba 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.heading {
+  max-width: 640px;
+  margin-bottom: clamp(36px, 5vw, 56px);
+}
+.heading--center {
+  text-align: center;
+  margin-inline: auto;
+}
+.heading--center .eyebrow {
+  justify-content: center;
+}
+.heading--center .eyebrow::after {
+  content: '';
+  width: 28px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--fire), transparent);
+}
+.heading__title {
+  font-size: clamp(2rem, 4.6vw, 3.4rem);
+  font-weight: 900;
+  font-style: italic;
+  text-transform: uppercase;
+  color: var(--steel-100);
+  margin-bottom: 16px;
+}
+.heading__text {
+  color: var(--text-2);
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.tag {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--fire-3);
+  background: rgba(255, 122, 18, 0.12);
+  border: 1px solid rgba(255, 122, 18, 0.35);
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+/* ---------- botões ---------- */
+.btn {
+  --h: 50px;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: var(--h);
+  padding: 0 24px;
+  border-radius: 10px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  isolation: isolate;
+  overflow: hidden;
+  transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease), background 0.3s, color 0.3s, border-color 0.3s;
+}
+.btn:active {
+  transform: translateY(1px) scale(0.99);
+}
+.btn--primary {
+  color: #160a00;
+  background: linear-gradient(180deg, #ffb055 0%, var(--fire) 55%, #f06200 100%);
+  box-shadow: 0 10px 28px -10px var(--fire-glow), inset 0 1px 0 rgba(255, 255, 255, 0.45), inset 0 -2px 0 rgba(0, 0, 0, 0.18);
+}
+.btn--primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 38px -10px rgba(255, 122, 18, 0.7), 0 0 0 4px rgba(255, 122, 18, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+.btn--ghost {
+  color: var(--steel-100);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--line-2);
+  backdrop-filter: blur(6px);
+}
+.btn--ghost:hover {
+  border-color: var(--steel-300);
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateY(-2px);
+}
+.btn--outline {
+  color: var(--steel-100);
+  border: 1.5px solid var(--fire);
+  background: transparent;
+}
+.btn--outline:hover {
+  background: rgba(255, 122, 18, 0.12);
+  box-shadow: 0 0 24px -6px var(--fire-glow);
+  transform: translateY(-2px);
+}
+.btn--lg {
+  --h: 56px;
+  padding: 0 28px;
+  font-size: 1rem;
+}
+.btn--xl {
+  --h: 66px;
+  padding: 0 36px;
+  font-size: clamp(0.95rem, 2.2vw, 1.15rem);
+  border-radius: 14px;
+}
+.btn--block {
+  width: 100%;
+}
+.btn[disabled] {
+  opacity: 0.75;
+  cursor: progress;
+}
+
+/* faixa de brilho que atravessa o botão */
+.btn--shine::after,
+.btn--primary::after {
+  content: '';
+  position: absolute;
+  inset: -2px auto -2px -60%;
+  width: 45%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+  transform: skewX(-20deg);
+  z-index: -1;
+  transition: left 0.7s var(--ease);
+}
+.btn--primary:hover::after {
+  left: 120%;
+}
+.btn--shine::after {
+  animation: shine 3.2s ease-in-out infinite;
+}
+.btn--shine {
+  animation: glowPulse 2.6s ease-in-out infinite;
+}
+
+@keyframes shine {
+  0%, 55% { left: -60%; }
+  100% { left: 130%; }
+}
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 14px 36px -12px var(--fire-glow), 0 0 0 0 rgba(255, 122, 18, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.45); }
+  50% { box-shadow: 0 20px 50px -10px rgba(255, 122, 18, 0.8), 0 0 0 10px rgba(255, 122, 18, 0), inset 0 1px 0 rgba(255, 255, 255, 0.45); }
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+.spin {
+  animation: spin 0.9s linear infinite;
+}
+
+/* ---------- animação de entrada (Intersection Observer) ---------- */
+.reveal {
+  opacity: 0;
+  transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+  transition-delay: var(--delay, 0ms);
+  will-change: opacity, transform;
+}
+.reveal--up { transform: translateY(36px); }
+.reveal--left { transform: translateX(-48px); }
+.reveal--right { transform: translateX(48px); }
+.reveal--scale { transform: scale(0.94); }
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- camadas de canvas ---------- */
+.weld-canvas,
+.ember-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal { opacity: 1; transform: none; }
+}
